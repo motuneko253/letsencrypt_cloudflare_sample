@@ -1,7 +1,7 @@
 services:
   letsencrypt:
     build:
-      context: /work/letsencrypt/letsencrypt
+      context: ./letsencrypt
       dockerfile: Dockerfile
     networks:
       - wp_net_letsencrypt
