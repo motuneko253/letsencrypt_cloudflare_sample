@@ -1,0 +1,21 @@
+services:
+  letsencrypt:
+    build:
+      context: /work/letsencrypt/letsencrypt
+      dockerfile: Dockerfile
+    networks:
+      - wp_net_letsencrypt
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    entrypoint: "/bin/bash -c 'trap exit TERM; while :; do /root/certbot_install.sh; sleep 10d & wait $${!}; done;'"
+    restart: always
+    environment:
+      - API_TOKEN=[APIトークン]
+      - DOMAIN=[ドメイン名]
+      - SUBDOMAIN=[サブドメイン名]
+      - EMAIL=[メールアドレス]
+      - WAIT_TIME=20
+      - TZ=Asia/Tokyo
+networks:
+  wp_net_letsencrypt:
+    driver: bridge
